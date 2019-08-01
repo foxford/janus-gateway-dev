@@ -1,0 +1,6 @@
+# With `.git` submodule file Janus Gateway compilation fails.
+janus-gateway/.git
+recordings/
+README.md
+.gitignore
+.gitmodules
