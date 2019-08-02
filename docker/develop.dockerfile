@@ -38,16 +38,23 @@ RUN apk add --update --no-cache \
 ## -----------------------------------------------------------------------------
 ## Build Paho MQTT client
 ## -----------------------------------------------------------------------------
-ARG PAHO_MQTT_VERSION=1.3.0
-
 RUN PAHO_MQTT_BUILD_DIR=$(mktemp -d) \
     && cd "${PAHO_MQTT_BUILD_DIR}" \
     && git clone "https://github.com/eclipse/paho.mqtt.c.git" . \
-    && git checkout "v${PAHO_MQTT_VERSION}" \
+    && git checkout 1.3.0 \
     && make \
-    && make install \
-    && rm -rf "${PAHO_MQTT_BUILD_DIR}"
+    && make install
 
+    # WARGING: If you want to switch to Paho 1.1.0 pay attention that `make install`
+    # works badly in that version on alpine. Use commands below instead:
+    #
+    # && cp ./build/output/libpaho* /usr/local/lib/ \
+    # && ldconfig /usr/local/lib \
+    # && mkdir -p /usr/local/include \
+    # && cp ./src/MQTTAsync.h /usr/local/include/MQTTAsync.h \
+    # && cp ./src/MQTTClient.h /usr/local/include/MQTTClient.h \
+    # && cp ./src/MQTTClientPersistence.h /usr/local/include/MQTTClientPersistence.h
+    
 ## -----------------------------------------------------------------------------
 ## Build Janus Gateway
 ## -----------------------------------------------------------------------------
