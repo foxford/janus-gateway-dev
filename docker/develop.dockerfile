@@ -13,6 +13,7 @@ RUN apk add --update --no-cache \
       automake \
       libtool \
       curl-dev \
+      gdb \
       # Janus Gateway dependencies
       libressl-dev \
       libsrtp-dev \
@@ -41,7 +42,7 @@ RUN apk add --update --no-cache \
 RUN PAHO_MQTT_BUILD_DIR=$(mktemp -d) \
     && cd "${PAHO_MQTT_BUILD_DIR}" \
     && git clone "https://github.com/eclipse/paho.mqtt.c.git" . \
-    && git checkout 1.3.0 \
+    && git checkout v1.3.0 \
     && make \
     && make install
 
