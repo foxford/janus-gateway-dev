@@ -65,3 +65,11 @@ git push origin my-feature
 11. If you can't wait for the PR to be merged you can temporarily switch to the fork repo in [Janus Conference](https://github.com/netology-group/janus-conference). For that change [Dockerfile](https://github.com/netology-group/janus-conference/blob/master/docker/Dockerfile) and [develop.dockerfile](https://github.com/netology-group/janus-conference/blob/master/docker/develop.dockerfile) by changing `https://github.com/meetecho/janus-gateway` to `https://github.com/netology-group/janus-gateway` and setting `JANUS_GATEWAY_COMMIT` to your branch's head.
 
 12. When [Lorenzo](https://github.com/lminiero) from Meetecho merges the PR you should update `JANUS_GATEWAY_COMMIT` to the latest SHA1 from Meetecho's repo master branch and switch back to that repo if you have switched to the fork in the previous step. Build and test it again before pushing/deploying because other commits might been made in Janus Gateway that could break some things.
+
+## Debugging with GDB in VSCode
+
+This repo has debug configuration for VSCode in `.vscode/launch.json`.
+
+1. Run Janus under gdbserver: `gdbserver :2000 /opt/janus/bin/janus`. It can be done by uncommenting the corresponding line in `docker/docker-compose.json`.
+2. Set breakpoints in the C code in janus-gateway directory.
+3. In VSCode choose Debug -> Start Debugging.

@@ -1,40 +1,41 @@
-FROM netologygroup/janus-gateway:7959ab6 as janus-conference-plugin
-FROM alpine:latest
+FROM netologygroup/janus-gateway:9668ce0 as janus-conference-plugin
+FROM debian:stretch
 
 ## -----------------------------------------------------------------------------
 ## Install dependencies
 ## -----------------------------------------------------------------------------
-RUN apk add --update --no-cache \
-      # Build & debug tools
-      build-base \
-      gcc \
-      git \
-      autoconf \
-      automake \
-      libtool \
-      curl-dev \
-      gdb \
-      # Janus Gateway dependencies
-      libressl-dev \
-      libsrtp-dev \
-      libconfig-dev \
-      libmicrohttpd-dev \
-      jansson-dev \
-      opus-dev \
-      libogg-dev \
-      libwebsockets-dev \
-      gengetopt \
-      libnice-dev \
-      # Janus Conference plugin dependencies
-      gstreamer-dev \
-      gstreamer-tools \
-      gst-plugins-base-dev \
-      gst-plugins-good \
-      gst-plugins-bad \
-      gst-plugins-ugly \
-      gst-libav \
-      libnice-gstreamer \
-      ffmpeg
+RUN set -xe \
+    && apt-get update \
+    && apt-get -y --no-install-recommends install \
+        libconfig-dev \
+        libmicrohttpd-dev \
+        libjansson-dev \
+        libnice-dev \
+        libcurl4-openssl-dev \
+        libsofia-sip-ua-dev \
+        libopus-dev \
+        libogg-dev \
+        libwebsockets-dev \
+        libsrtp2-dev \
+        gengetopt \
+        ca-certificates \
+        git \
+        libtool \
+        m4 \
+        automake \
+        make \
+        libgstreamer1.0-dev \
+        libgstreamer-plugins-base1.0-dev \
+        gstreamer1.0-plugins-base \
+        gstreamer1.0-plugins-good \
+        gstreamer1.0-plugins-bad \
+        gstreamer1.0-plugins-ugly \
+        gstreamer1.0-libav \
+        libgstrtspserver-1.0-dev \
+        wget \
+        gdb \
+        gdbserver \
+        libasan3
 
 ## -----------------------------------------------------------------------------
 ## Build Paho MQTT client
@@ -46,16 +47,6 @@ RUN PAHO_MQTT_BUILD_DIR=$(mktemp -d) \
     && make \
     && make install
 
-    # WARGING: If you want to switch to Paho 1.1.0 pay attention that `make install`
-    # works badly in that version on alpine. Use commands below instead:
-    #
-    # && cp ./build/output/libpaho* /usr/local/lib/ \
-    # && ldconfig /usr/local/lib \
-    # && mkdir -p /usr/local/include \
-    # && cp ./src/MQTTAsync.h /usr/local/include/MQTTAsync.h \
-    # && cp ./src/MQTTClient.h /usr/local/include/MQTTClient.h \
-    # && cp ./src/MQTTClientPersistence.h /usr/local/include/MQTTClientPersistence.h
-    
 ## -----------------------------------------------------------------------------
 ## Build Janus Gateway
 ## -----------------------------------------------------------------------------
@@ -63,6 +54,8 @@ COPY ./janus-gateway/ /janus-gateway
 
 RUN set -xe \
     && cd /janus-gateway \
+    && CFLAGS="-g -fsanitize=thread -fsanitize=address -fno-omit-frame-pointer" \
+    && LDFLAGS="-lasan" \
     && ./autogen.sh \
     && ./configure --prefix=/opt/janus \
     && make -j $(nproc) \
