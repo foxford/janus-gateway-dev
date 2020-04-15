@@ -45,7 +45,8 @@ git checkout -b my-feature
 ```bash
 cd ..
 export COMPOSE_FILE=docker/docker-compose.yml
-docker-compose up
+docker-compose up -d
+docker-compose exec janus /opt/janus/bin/janus
 ```
 
 8. If everything compiled and started properly test your feature and basic Janus Conference scenarios manually.
@@ -70,6 +71,6 @@ git push origin my-feature
 
 This repo has debug configuration for VSCode in `.vscode/launch.json`.
 
-1. Run Janus under gdbserver: `gdbserver :2000 /opt/janus/bin/janus`. It can be done by uncommenting the corresponding line in `docker/docker-compose.json`.
+1. Run Janus under gdbserver: `gdbserver :2000 /opt/janus/bin/janus`.
 2. Set breakpoints in the C code in janus-gateway directory.
 3. In VSCode choose Debug -> Start Debugging.

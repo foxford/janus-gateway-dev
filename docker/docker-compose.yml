@@ -16,12 +16,11 @@ services:
     links:
       - vernemq
     working_dir: /build
-    command: /opt/janus/bin/janus
-    # command: gdbserver :2000 /opt/janus/bin/janus
+    command: /bin/bash
     stdin_open: true
     tty: true
   vernemq:
-    image: netologygroup/mqtt-gateway:9560493
+    image: netologygroup/mqtt-gateway:7b7ae93
     ports:
       - "1883:1883"
       - "8080:8080"

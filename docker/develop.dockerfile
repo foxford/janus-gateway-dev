@@ -1,4 +1,4 @@
-FROM netologygroup/janus-gateway:b54ff0e as janus-conference-plugin
+FROM netologygroup/janus-gateway:v0.6.1 as janus-conference-plugin
 FROM debian:stretch
 
 ## -----------------------------------------------------------------------------
@@ -54,8 +54,7 @@ COPY ./janus-gateway/ /janus-gateway
 
 RUN set -xe \
     && cd /janus-gateway \
-    && CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" \
-    && LDFLAGS="-lasan" \
+    && CFLAGS="-g -O0" \
     && ./autogen.sh \
     && ./configure --prefix=/opt/janus \
     && make -j $(nproc) \
