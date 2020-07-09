@@ -1,6 +1,6 @@
 general: {
   enabled = true
-  json = "compact"
+  json = "indented"
   url = "tcp://vernemq:1883"
   mqtt_version = "5"
   username = "v2::service"
@@ -10,8 +10,9 @@ general: {
   subscribe_qos = 0
   publish_topic = "apps/janus-gateway.dev.svc.example.org/api/v1/events"
   publish_qos = 1
-  cleansession = 0
+  cleansession = false
   keep_alive_interval = 30
+  max_inflight = 1000
   disconnect_timeout = 1000
 	vacuum_interval = 60
 	proxy_transaction_user_properties = ["local_initial_timediff", "initial_timediff", "cumulative_authorization_time", "cumulative_processing_time"]

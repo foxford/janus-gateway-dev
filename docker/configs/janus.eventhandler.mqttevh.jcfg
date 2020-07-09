@@ -1,0 +1,22 @@
+general: {
+	enabled = true
+	events = "all"
+	json = "indented"
+
+	url = "tcp://vernemq:1883"
+  mqtt_version = "5"
+  username = "v2::service"
+  password = ""
+  client_id = "alpha-evh.janus-gateway.dev.svc.example.org"
+	keep_alive_interval = 30
+  max_inflight = 1000
+	cleansession = 0
+  disconnect_timeout = 1000
+	
+	topic = "apps/janus-gateway.dev.svc.example.org/api/v1/events"
+	addevent = true
+  qos = 1
+  retain = false
+
+  add_transaction_user_properties = (["type", "event"], ["label", "janus.evh"])
+}

@@ -1,6 +1,9 @@
 [general]
 vacuum_interval = 5
 
+[constraint.publisher]
+bitrate = 1000000
+
 [recordings]
 directory = "/recordings"
 enabled = false

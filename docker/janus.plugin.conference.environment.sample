@@ -1,4 +1,4 @@
-LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libasan.so.3
+LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libasan.so.5
 
 APP_UPLOADING__ACCESS_KEY_ID=
 APP_UPLOADING__SECRET_ACCESS_KEY=
