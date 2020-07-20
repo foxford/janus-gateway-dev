@@ -10,6 +10,7 @@ general: {
   client_id = "alpha-evh.janus-gateway.dev.svc.example.org"
 	keep_alive_interval = 30
   max_inflight = 1000
+  max_buffered = 1000
 	cleansession = 0
   disconnect_timeout = 1000
 	

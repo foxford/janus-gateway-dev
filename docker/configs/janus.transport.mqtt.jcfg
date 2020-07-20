@@ -13,6 +13,7 @@ general: {
   cleansession = false
   keep_alive_interval = 30
   max_inflight = 1000
+  max_buffered = 1000
   disconnect_timeout = 1000
 	vacuum_interval = 60
 	proxy_transaction_user_properties = ["local_initial_timediff", "initial_timediff", "cumulative_authorization_time", "cumulative_processing_time"]
